@@ -73,11 +73,10 @@ public class BasicOpMode extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDriveFront  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDriveFront = hardwareMap.get(DcMotor.class, "right_drive");
-        leftDriveBack  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDriveBack = hardwareMap.get(DcMotor.class, "right_drive");
-
+        leftDriveFront  = hardwareMap.get(DcMotor.class, "left_drive_front");
+        rightDriveFront = hardwareMap.get(DcMotor.class, "right_drive_front");
+        leftDriveBack  = hardwareMap.get(DcMotor.class, "left_drive_back");
+        rightDriveBack = hardwareMap.get(DcMotor.class, "right_drive_back");
         armMotorRotate = hardwareMap.get(DcMotor.class, "arm_motor_rotate");
         armExtend = hardwareMap.get(DcMotor.class, "arm_motor_extend");
 
@@ -88,7 +87,6 @@ public class BasicOpMode extends OpMode
         rightDriveFront.setDirection(DcMotor.Direction.FORWARD);
         leftDriveBack.setDirection(DcMotor.Direction.REVERSE);
         rightDriveBack.setDirection(DcMotor.Direction.FORWARD);
-        armExtend.setDirection(DcMotor.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
