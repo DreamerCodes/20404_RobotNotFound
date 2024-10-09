@@ -139,7 +139,7 @@ public class BasicOpMode extends OpMode
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPowerFront, rightPowerFront);
+        telemetry.addData("Motors", "left front (%.2f), left back (%.2f), right front (%.2f), right back (%.2f)", leftPowerFront, leftPowerBack, rightPowerFront, rightPowerBack);
 
         //ROTATE ARM//
         double armPower = 0.3;
