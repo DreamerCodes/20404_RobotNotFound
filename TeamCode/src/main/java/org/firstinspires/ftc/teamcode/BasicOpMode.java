@@ -58,6 +58,7 @@ public class BasicOpMode extends OpMode
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor armMotorRotate = null;
+    private DcMotor armMotorExtend = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -71,7 +72,9 @@ public class BasicOpMode extends OpMode
         // step (using the FTC Robot Controller app on the phone).
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        armMotorRotate = hardwareMap.get(DcMotor.class, "arm_motor");
+        armMotorRotate = hardwareMap.get(DcMotor.class, "arm_motor_rotate");
+        armMotorExtend = hardwareMap.get(DcMotor.class, "arm_motor_extend");
+
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -104,7 +107,7 @@ public class BasicOpMode extends OpMode
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
 
-        //WHEELS START//
+        //WHEELS//
         double leftPowerFront;
         double rightPowerFront;
         double leftPowerBack;
@@ -122,22 +125,18 @@ public class BasicOpMode extends OpMode
         // Send calculated power to wheels
         leftDrive.setPower(leftPowerFront);
         leftDrive.setPower(leftPowerBack);
-
         rightDrive.setPower(rightPowerFront);
         rightDrive.setPower(rightPowerBack);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPowerFront, rightPowerFront);
-        //WHEELS END//
 
-        //=================================//
-
-        //ARM START//
+        //ROTATE ARM//
         double armPower = 0.3;
 
         if(gamepad1.left_bumper){
-            //Arm moue down
+            //Arm move down
             armMotorRotate.setPower(-armPower);
             telemetry.addData("Arm Direction", "rotate down");
         }
@@ -145,24 +144,23 @@ public class BasicOpMode extends OpMode
             //Arm move up
             armMotorRotate.setPower(armPower);
             telemetry.addData("Arm Direction", "rotate up");
-        }else {
+        }
+        else {
+            //Arm idle
             telemetry.addData("Arm Direction", "idle");
             armMotorRotate.setPower(0);
         }
 
         //EXTEND ARM//
+        double armMotorExtend;
+
         double extend = -gamepad1.right_stick_y;
         double shorten  =  gamepad1.right_stick_x;
-        leftPowerFront = Range.clip(extend + shorten, -0.7, 1.0) ;
-        rightPowerFront = Range.clip(extend - shorten, -0.7, 1.0) ;
+        armMotorExtend = Range.clip(extend + shorten, -1.0, 1.0) ;
 
-        leftDrive.setPower(leftPowerFront);
-        leftDrive.setPower(leftPowerBack);
-
-        rightDrive.setPower(rightPowerFront);
-        rightDrive.setPower(rightPowerBack);
-        //ARM END//
-
+        leftDrive.setPower(armMotorExtend);
+        telemetry.addData("Arm Direction", "extend",extend);
+        telemetry.addData("Arm Direction", "shorten",shorten);
     }
 
     /*
