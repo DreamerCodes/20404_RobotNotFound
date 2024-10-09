@@ -55,10 +55,13 @@ public class BasicOpMode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
+    private DcMotor leftDriveFront = null;
+    private DcMotor rightDriveFront = null;
+    private DcMotor leftDriveBack = null;
+    private DcMotor rightDriveBack = null;
+
     private DcMotor armMotorRotate = null;
-    private DcMotor armMotorExtend = null;
+    private DcMotor armExtend = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -70,16 +73,22 @@ public class BasicOpMode extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
+        leftDriveFront  = hardwareMap.get(DcMotor.class, "left_drive");
+        rightDriveFront = hardwareMap.get(DcMotor.class, "right_drive");
+        leftDriveBack  = hardwareMap.get(DcMotor.class, "left_drive");
+        rightDriveBack = hardwareMap.get(DcMotor.class, "right_drive");
+
         armMotorRotate = hardwareMap.get(DcMotor.class, "arm_motor_rotate");
-        armMotorExtend = hardwareMap.get(DcMotor.class, "arm_motor_extend");
+        armExtend = hardwareMap.get(DcMotor.class, "arm_motor_extend");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftDriveFront.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveFront.setDirection(DcMotor.Direction.FORWARD);
+        leftDriveBack.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveBack.setDirection(DcMotor.Direction.FORWARD);
+        armExtend.setDirection(DcMotor.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -123,10 +132,10 @@ public class BasicOpMode extends OpMode
         rightPowerBack = Range.clip(drive - turn, -0.7, 1.0) ;
 
         // Send calculated power to wheels
-        leftDrive.setPower(leftPowerFront);
-        leftDrive.setPower(leftPowerBack);
-        rightDrive.setPower(rightPowerFront);
-        rightDrive.setPower(rightPowerBack);
+        leftDriveFront.setPower(leftPowerFront);
+        leftDriveBack.setPower(leftPowerBack);
+        rightDriveFront.setPower(rightPowerFront);
+        rightDriveBack.setPower(rightPowerBack);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -156,9 +165,9 @@ public class BasicOpMode extends OpMode
 
         double extend = -gamepad1.right_stick_y;
         double shorten  =  gamepad1.right_stick_x;
-        armMotorExtend = Range.clip(extend + shorten, -1.0, 1.0) ;
+        armMotorExtend = Range.clip(extend + shorten, -1.0, 1.0);
 
-        leftDrive.setPower(armMotorExtend);
+        armExtend.setPower(armMotorExtend);
         telemetry.addData("Arm Direction", "extend",extend);
         telemetry.addData("Arm Direction", "shorten",shorten);
     }
