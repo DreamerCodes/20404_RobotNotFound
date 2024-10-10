@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -31,7 +31,7 @@ public class BasicOpMode extends OpMode
     private DcMotor leftDriveBack = null;
     private DcMotor rightDriveBack = null;
 
-    private DcMotor wristMotorRotate = null;
+    private DcMotor armMotorRotate = null;
     private DcMotor armExtend = null;
 
     @Override
@@ -45,7 +45,7 @@ public class BasicOpMode extends OpMode
         rightDriveFront = hardwareMap.get(DcMotor.class, "right_drive_front");
         leftDriveBack  = hardwareMap.get(DcMotor.class, "left_drive_back");
         rightDriveBack = hardwareMap.get(DcMotor.class, "right_drive_back");
-        wristMotorRotate = hardwareMap.get(DcMotor.class, "arm_motor_rotate");
+        armMotorRotate = hardwareMap.get(DcMotor.class, "arm_motor_rotate");
         armExtend = hardwareMap.get(DcMotor.class, "arm_motor_extend");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -101,22 +101,22 @@ public class BasicOpMode extends OpMode
         //ROTATE ARM//
         double armPower = 0.3;
 
-        //Right bumper rotates claw in
+        //Right bumper rotates arm down
         if(gamepad1.left_bumper){
-            wristMotorRotate.setPower(-armPower);
+            armMotorRotate.setPower(-armPower);
             telemetry.addData("Arm Direction", "rotate down");
         }
 
-        //Right bumper rotates claw out
+        //Right bumper rotates arm up
         else if(gamepad1.right_bumper){
-            wristMotorRotate.setPower(armPower);
+            armMotorRotate.setPower(armPower);
             telemetry.addData("Arm Direction", "rotate up");
         }
 
-        //Claw idle
+        //Arm idle
         else {
             telemetry.addData("Arm Direction", "idle");
-            wristMotorRotate.setPower(0);
+            armMotorRotate.setPower(0);
         }
 
         //EXTEND ARM//
