@@ -1,32 +1,3 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -60,12 +31,9 @@ public class BasicOpMode extends OpMode
     private DcMotor leftDriveBack = null;
     private DcMotor rightDriveBack = null;
 
-    private DcMotor armMotorRotate = null;
+    private DcMotor wristMotorRotate = null;
     private DcMotor armExtend = null;
 
-    /*
-     * Code to run ONCE when the driver hits INIT
-     */
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
@@ -77,7 +45,7 @@ public class BasicOpMode extends OpMode
         rightDriveFront = hardwareMap.get(DcMotor.class, "right_drive_front");
         leftDriveBack  = hardwareMap.get(DcMotor.class, "left_drive_back");
         rightDriveBack = hardwareMap.get(DcMotor.class, "right_drive_back");
-        armMotorRotate = hardwareMap.get(DcMotor.class, "arm_motor_rotate");
+        wristMotorRotate = hardwareMap.get(DcMotor.class, "arm_motor_rotate");
         armExtend = hardwareMap.get(DcMotor.class, "arm_motor_extend");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -92,27 +60,18 @@ public class BasicOpMode extends OpMode
         telemetry.addData("Status", "Initialized");
     }
 
-    /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit START
-     */
     @Override
     public void init_loop() {
     }
 
-    /*
-     * Code to run ONCE when the driver hits START
-     */
     @Override
     public void start() {
         runtime.reset();
     }
 
-    /*
-     * Code to run REPEATEDLY after the driver hits START but before they hit STOP
-     */
     @Override
+    //Motor stuff/movement
     public void loop() {
-        // Setup a variable for each drive wheel to save power level for telemetry
 
         //WHEELS//
         double leftPowerFront;
@@ -142,25 +101,28 @@ public class BasicOpMode extends OpMode
         //ROTATE ARM//
         double armPower = 0.3;
 
+        //Right bumper rotates claw in
         if(gamepad1.left_bumper){
-            //Arm move down
-            armMotorRotate.setPower(-armPower);
+            wristMotorRotate.setPower(-armPower);
             telemetry.addData("Arm Direction", "rotate down");
         }
+
+        //Right bumper rotates claw out
         else if(gamepad1.right_bumper){
-            //Arm move up
-            armMotorRotate.setPower(armPower);
+            wristMotorRotate.setPower(armPower);
             telemetry.addData("Arm Direction", "rotate up");
         }
+
+        //Claw idle
         else {
-            //Arm idle
             telemetry.addData("Arm Direction", "idle");
-            armMotorRotate.setPower(0);
+            wristMotorRotate.setPower(0);
         }
 
         //EXTEND ARM//
         double armMotorExtend;
 
+        //Right joystick used for extending/shortening
         double extend = -gamepad1.right_stick_y;
         double shorten  =  gamepad1.right_stick_x;
         armMotorExtend = Range.clip(extend + shorten, -1.0, 1.0);
@@ -170,9 +132,6 @@ public class BasicOpMode extends OpMode
         telemetry.addData("Arm Direction", "shorten",shorten);
     }
 
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
     @Override
     public void stop() {
     }
