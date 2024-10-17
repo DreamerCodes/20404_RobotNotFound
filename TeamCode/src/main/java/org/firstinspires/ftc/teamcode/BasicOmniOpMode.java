@@ -19,6 +19,7 @@ public class BasicOmniOpMode extends LinearOpMode {
     private DcMotor armMotorRotate = null;
     private DcMotor armExtend = null;
 
+    @Override
     public void runOpMode() {
 
         // Initialize the hardware variables. Note that the strings used here must correspond
@@ -143,7 +144,7 @@ public class BasicOmniOpMode extends LinearOpMode {
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             telemetry.update();
+
         }
     }
-
 }
