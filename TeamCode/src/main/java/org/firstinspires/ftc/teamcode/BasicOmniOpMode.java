@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -24,10 +25,10 @@ public class BasicOmniOpMode extends LinearOpMode {
 
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
 
         armMotorRotate = hardwareMap.get(DcMotor.class, "arm_motor_rotate");
         armExtend = hardwareMap.get(DcMotor.class, "arm_motor_extend");
@@ -61,7 +62,7 @@ public class BasicOmniOpMode extends LinearOpMode {
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
             double lateral =  gamepad1.left_stick_x;
-            double yaw     =  gamepad1.right_stick_x;
+            double yaw     =  gamepad1.left_stick_x;
 
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -77,6 +78,8 @@ public class BasicOmniOpMode extends LinearOpMode {
             max = Math.max(max, Math.abs(rightBackPower));
 
             if (max > 1.0) {
+
+
                 leftFrontPower  /= max;
                 rightFrontPower /= max;
                 leftBackPower   /= max;
@@ -107,7 +110,7 @@ public class BasicOmniOpMode extends LinearOpMode {
             rightBackDrive.setPower(rightBackPower);
 
             //ROTATE ARM//
-            double armPower = 0.3;
+            double armPower = 1.0;
 
             //Right bumper rotates arm down
             if(gamepad1.left_bumper){
@@ -129,10 +132,9 @@ public class BasicOmniOpMode extends LinearOpMode {
 
             //EXTEND ARM//
             double armMotorExtend;
-
-            //Right joystick used for extending/retracting
-            double extend = -gamepad1.right_stick_y;
-            double shorten  =  gamepad1.right_stick_x;
+            //Right/left trigger used for extending/retracting
+            double extend = -gamepad1.right_trigger;
+            double shorten  =  gamepad1.left_trigger;
             armMotorExtend = Range.clip(extend + shorten, -1.0, 1.0);
 
             armExtend.setPower(armMotorExtend);
