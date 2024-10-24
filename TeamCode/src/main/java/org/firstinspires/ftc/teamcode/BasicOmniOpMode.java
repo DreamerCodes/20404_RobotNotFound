@@ -157,39 +157,43 @@ public class BasicOmniOpMode extends LinearOpMode {
             if (gamepad1.dpad_up) {
                 //Close
                 clawOpenClose.setPosition(-1);
-                telemetry.addData("Servo Position", "Closed", clawOpenClose.getPosition());
+                telemetry.addData("Servo Position", clawOpenClose.getPosition());
             }
             else if (gamepad1.dpad_down) {
                 //Open
                 clawOpenClose.setPosition(.2);
                 telemetry.addData("Servo Position", "Open", clawOpenClose.getPosition());
             }
+            /*
             else {
 
                 telemetry.addData("Servo Position", "Idle", clawOpenClose.getPosition());
             }
+             */
+
             //ROTATE INTAKE/CLAW
             clawRotate.scaleRange(-1, 1);
 
             if (gamepad1.dpad_left)  {
                 //Move left
                 clawRotate.setPosition(-.8);
-                telemetry.addData("Servo Position", "Left", clawRotate.getPosition());
+                telemetry.addData("Servo Position", clawRotate.getPosition());
             }
             else if (gamepad1.dpad_right) {
                 //Move right
                 clawRotate.setPosition(.8);
-                telemetry.addData("Servo Position", "Right", clawRotate.getPosition());
+                telemetry.addData("Servo Position", clawRotate.getPosition());
             }
             else if (gamepad1.right_stick_button){
                 //Move middle
                 clawRotate.setPosition(.5);
-                telemetry.addData("Servo Position", "Middle", clawRotate.getPosition());
+                telemetry.addData("Servo Position", clawRotate.getPosition());
             }
+            /*
             else {
-
-                telemetry.addData("Servo Position", "Idle", clawRotate.getPosition());
+                telemetry.addData("Servo Position", clawRotate.getPosition());
             }
+             */
         }
     }
 }
