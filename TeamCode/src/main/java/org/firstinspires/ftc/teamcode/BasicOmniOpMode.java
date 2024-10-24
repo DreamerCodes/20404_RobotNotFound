@@ -173,7 +173,6 @@ public class BasicOmniOpMode extends LinearOpMode {
 
             //ROTATE INTAKE/CLAW
             clawRotate.scaleRange(0.2, 0.8);
-            clawRotate.getController();
 
             if (gamepad1.dpad_left)  {
                 //move to position 0.5 or 0°
