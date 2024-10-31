@@ -1,0 +1,15 @@
+
+WHEELS
+right front wheel = "right_front_drive"
+right back wheel = "right_back_drive"
+left front wheel = "left_front_drive"
+left back wheel = "left_back_drive"
+
+ARM
+arm rotation motor = "arm_motor_rotate"
+arm extension motor = "arm_motor_extend"
+
+INTAKE CLAW + WRIST
+claw open & rotate servo = "claw_open_close"
+claw horizontal rotation servo = "claw_rotate_h"
+wrist servo = "wrist"

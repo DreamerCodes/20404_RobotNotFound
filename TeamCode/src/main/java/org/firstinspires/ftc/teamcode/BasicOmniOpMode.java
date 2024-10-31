@@ -22,6 +22,7 @@ public class BasicOmniOpMode extends LinearOpMode {
 
     private Servo clawOpenClose;
     private Servo clawRotate;
+    private Servo wrist;
     @Override
     public void runOpMode() {
 
@@ -36,7 +37,8 @@ public class BasicOmniOpMode extends LinearOpMode {
         armExtend = hardwareMap.get(DcMotor.class, "arm_motor_extend");
 
         clawOpenClose = hardwareMap.get(Servo.class, "claw_open_close");
-        clawRotate = hardwareMap.get(Servo.class, "claw_rotate");
+        clawRotate = hardwareMap.get(Servo.class, "claw_rotate_h");
+        wrist = hardwareMap.get(Servo.class, "wrist");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -113,7 +115,6 @@ public class BasicOmniOpMode extends LinearOpMode {
             rightBackDrive.setPower(rightBackPower);
 
             //ROTATE ARM//
-
             //Right bumper rotates arm up
             if (gamepad1.left_bumper) {
                 armMotorRotate.setPower(-.6);
@@ -155,42 +156,69 @@ public class BasicOmniOpMode extends LinearOpMode {
             //OPEN INTAKE/CLAW
             clawOpenClose.scaleRange(-1, .2);
 
+            //Close
             if (gamepad1.dpad_up) {
-                //Close
                 clawOpenClose.setPosition(-1);
                 telemetry.addData("Claw Servo Position","Open", clawOpenClose.getPosition());
             }
+
+            //Open
             else if (gamepad1.dpad_down) {
-                //Open
                 clawOpenClose.setPosition(.2);
                 telemetry.addData("Claw Servo Position","Close", clawOpenClose.getPosition());
             }
-            else {
 
+            //Idle
+            else {
                 telemetry.addData("Claw Servo Position", "Idle", clawOpenClose.getPosition());
             }
             telemetry.update();
 
-            //ROTATE INTAKE/CLAW
+            //HORIZONTAL ROTATE INTAKE/CLAW
             clawRotate.scaleRange(-1, 1);
 
-            if (gamepad1.dpad_left)  {
-                //Move left
+            //Move left
+            if (gamepad1.dpad_left) {
                 clawRotate.setPosition(-.8);
                 telemetry.addData("Claw Rotate Servo Position","Left", clawRotate.getPosition());
             }
+
+            //Move right
             else if (gamepad1.dpad_right) {
-                //Move right
+
                 clawRotate.setPosition(.8);
                 telemetry.addData("Claw Rotate Servo Position","Right", clawRotate.getPosition());
             }
+
+            //Move middle
             else if (gamepad1.right_stick_button){
-                //Move middle
-                clawRotate.setPosition(.5);
+                clawRotate.setPosition(0);
                 telemetry.addData("Claw Rotate Servo Position","Middle", clawRotate.getPosition());
             }
+
+            //Idle
             else {
                 telemetry.addData("Claw Rotate Servo Position","Idle", clawRotate.getPosition());
+            }
+
+            //WRIST MOVEMENT
+            wrist.scaleRange(-1, 1);
+
+            //Move Wrist To Starting/Default Position
+            if (gamepad1.dpad_left)  {
+                wrist.setPosition(-.8);
+                telemetry.addData("Wrist Position","Starting/Default Position", wrist.getPosition());
+            }
+
+            //Move Wrist Out/Up Position
+            else if (gamepad1.dpad_right) {
+                wrist.setPosition(.8);
+                telemetry.addData("Wrist Position","Outward/Up", wrist.getPosition());
+            }
+
+            //Idle
+            else {
+                telemetry.addData("Wrist","Idle", wrist.getPosition());
             }
             telemetry.update();
         }
