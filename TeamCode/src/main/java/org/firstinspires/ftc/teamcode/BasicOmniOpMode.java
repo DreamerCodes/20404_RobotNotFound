@@ -7,6 +7,25 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+/*
+DEVICE NAMES
+
+WHEELS
+right front wheel = "right_front_drive"
+right back wheel = "right_back_drive"
+left front wheel = "left_front_drive"
+left back wheel = "left_back_drive"
+
+ARM
+arm rotation = "arm_motor_rotate"
+arm extension = "arm_motor_extend"
+
+INTAKE CLAW + WRIST
+claw open & rotate = "claw_open_close"
+claw horizontal rotation = "claw_rotate_h"
+wrist = "wrist"
+ */
+
 @TeleOp(name="Basic: Omni Linear OpMode", group="Linear OpMode")
 //@Disabled
 public class BasicOmniOpMode extends LinearOpMode {
