@@ -26,7 +26,7 @@ claw horizontal rotation = "claw_rotate_h"
 wrist = "wrist"
  */
 
-@TeleOp(name="Basic: Omni Linear OpMode", group="Linear OpMode")
+@TeleOp(name="Omni Linear OpMode", group="Linear OpMode")
 //@Disabled
 public class OmniOpMode extends LinearOpMode {
     // Declare OpMode members for each of the 4 motors.
@@ -224,13 +224,13 @@ public class OmniOpMode extends LinearOpMode {
             wrist.scaleRange(-1, 1);
 
             //Move Wrist To Starting/Default Position
-            if (gamepad1.dpad_left)  {
+            if (gamepad1.a)  {
                 wrist.setPosition(-.8);
                 telemetry.addData("Wrist Position","Starting/Default Position", wrist.getPosition());
             }
 
             //Move Wrist Out/Up Position
-            else if (gamepad1.dpad_right) {
+            else if (gamepad1.y) {
                 wrist.setPosition(.8);
                 telemetry.addData("Wrist Position","Outward/Up", wrist.getPosition());
             }

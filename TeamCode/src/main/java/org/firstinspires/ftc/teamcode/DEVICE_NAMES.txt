@@ -12,3 +12,26 @@ INTAKE CLAW + WRIST
 claw open & rotate = "claw_open_close"
 claw horizontal rotation = "claw_rotate_h"
 wrist = "wrist"
+
+
+//OPEN INTAKE/CLAW
+//Close
+dpad_up
+//Open
+dpad_down
+
+//HORIZONTAL ROTATE INTAKE/CLAW
+
+//Move left
+dpad_left
+//Move right
+dpad_right
+//Move middle
+right_stick_button
+			
+//WRIST MOVEMENT
+
+//Move Wrist To Starting/Default Position
+a button
+//Move Wrist Out/Up Position
+y button
