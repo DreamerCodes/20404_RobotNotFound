@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Autonomous Omni Linear OpMode", group="Autonomous Opmode")
+@TeleOp(name="Autonomous Omni Linear OpMode UNFINISHED", group="Autonomous OpMode")
 public class OmniAutoOpMode {
         // Declare OpMode members for each of the 4 motors.
         private ElapsedTime runtime = new ElapsedTime();

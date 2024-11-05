@@ -138,19 +138,19 @@ public class OmniOpMode extends LinearOpMode {
             //Right bumper rotates arm up
             if (gamepad1.left_bumper) {
                 armMotorRotate.setPower(-.8);
-                telemetry.addData("Arm Direction", "rotate up");
+                telemetry.addData("Arm Direction Rotation", "up");
             }
 
             //Left bumper rotates arm down
             else if (gamepad1.right_bumper) {
                 armMotorRotate.setPower(.3);
-                telemetry.addData("Arm Direction", "rotate down");
+                telemetry.addData("Arm Direction Rotation", "down");
 
             }
 
             //Arm idle
             else {
-                telemetry.addData("Arm Direction", "idle");
+                telemetry.addData("Arm Direction Rotation", "idle");
                 armMotorRotate.setPower(0);
                 armMotorRotate.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
@@ -164,8 +164,7 @@ public class OmniOpMode extends LinearOpMode {
             armMotorExtend = Range.clip(extend + shorten, -1.0, 1.0);
 
             armExtend.setPower(armMotorExtend);
-            telemetry.addData("Arm Direction", "extend", extend);
-            telemetry.addData("Arm Direction", "shorten", shorten);
+            telemetry.addData("Arm Direction", "extend, shorten", extend, shorten);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -185,32 +184,33 @@ public class OmniOpMode extends LinearOpMode {
             //Open
             else if (gamepad1.dpad_down) {
                 clawOpenClose.setPosition(.2);
-                //telemetry.addData("Claw Servo Position","Close", clawOpenClose.getPosition());
+                telemetry.addData("Claw Servo Position","Close", clawOpenClose.getPosition());
             }
 
             //Idle
             else {
                 telemetry.addData("Claw Servo Position", "Idle", clawOpenClose.getPosition());
             }
+
             //HORIZONTAL ROTATE INTAKE/CLAW
             clawRotate.scaleRange(-1, 1);
 
             //Move left
             if (gamepad1.dpad_left) {
                 clawRotate.setPosition(0);
-                //telemetry.addData("Claw Rotate Servo Position","Left", clawRotate.getPosition());
+                telemetry.addData("Claw Rotate Servo Position","Left", clawRotate.getPosition());
             }
 
             //Move right
             else if (gamepad1.dpad_right) {
                 clawRotate.setPosition(-1);
-                //telemetry.addData("Claw Rotate Servo Position","Right", clawRotate.getPosition());
+                telemetry.addData("Claw Rotate Servo Position","Right", clawRotate.getPosition());
             }
 
             //Move middle
             else if (gamepad1.right_stick_button){
                 clawRotate.setPosition(.5);
-                //telemetry.addData("Claw Rotate Servo Position","Middle", clawRotate.getPosition());
+                telemetry.addData("Claw Rotate Servo Position","Middle", clawRotate.getPosition());
             }
 
             //Idle
