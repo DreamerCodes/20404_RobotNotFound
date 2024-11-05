@@ -14,7 +14,32 @@ claw horizontal rotation = "claw_rotate_h"
 wrist = "wrist"
 
 
+** add triggers and dpad for gamepad2
+
+//DRIVE
+//Drive and Strafe
+left_joystick
+
+//Drive Rotate
+right_joystick move left/right
+
+//ROTATE ARM//
+ 
+//Up
+right bumper
+//Hold
+//Lower
+left_bumper
+nothing
+
+//EXTEND & ARM//
+//Retract
+right_trigger
+//Shorten		
+left_trigger
+
 //OPEN INTAKE/CLAW
+
 //Close
 dpad_up
 //Open
@@ -26,12 +51,10 @@ dpad_down
 dpad_left
 //Move right
 dpad_right
-//Move middle
-right_stick_button
 			
 //WRIST MOVEMENT
 
 //Move Wrist To Starting/Default Position
-a button
+dpad down
 //Move Wrist Out/Up Position
-y button
+dpad up

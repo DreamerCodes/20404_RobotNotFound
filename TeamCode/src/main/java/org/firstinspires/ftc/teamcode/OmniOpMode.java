@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -103,18 +104,13 @@ public class OmniOpMode extends LinearOpMode {
             max = Math.max(max, Math.abs(leftBackPower));
             max = Math.max(max, Math.abs(rightBackPower));
 
-            if (max > 0.2 && gamepad1.a) {
+            if (max > 1.0) {
                 leftFrontPower /= max;
                 rightFrontPower /= max;
                 leftBackPower /= max;
                 rightBackPower /= max;
-                } else if (max > 1.0) {
-                leftFrontPower /= max;
-                rightFrontPower /= max;
-                leftBackPower /= max;
-                rightBackPower /= max;
-
-            } else if (max < 0.01) {
+            }
+            else if (max < 0.01) {
                 leftFrontDrive.setPower(0);
                 leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -135,24 +131,28 @@ public class OmniOpMode extends LinearOpMode {
             rightBackDrive.setPower(rightBackPower);
 
             //ROTATE ARM//
+
             //Right bumper rotates arm up
-            if (gamepad1.left_bumper) {
-                armMotorRotate.setPower(-.8);
+            if (gamepad1.right_bumper && gamepad1.b) {
+                armMotorRotate.setPower(.7);
                 telemetry.addData("Arm Direction Rotation", "up");
             }
 
-            //Left bumper rotates arm down
             else if (gamepad1.right_bumper) {
+                armMotorRotate.setPower(1);
+                telemetry.addData("Arm Direction Rotation", "up");
+            }
+            //Hold Arm
+            else if (gamepad1.left_bumper) {
+                telemetry.addData("Arm Direction Rotation", "hold");
                 armMotorRotate.setPower(.3);
-                telemetry.addData("Arm Direction Rotation", "down");
-
             }
 
-            //Arm idle
+            //Lower Arm
             else {
-                telemetry.addData("Arm Direction Rotation", "idle");
                 armMotorRotate.setPower(0);
                 armMotorRotate.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                telemetry.addData("Arm Direction Rotation", "lower/idle");
             }
 
             //EXTEND ARM//
@@ -173,16 +173,16 @@ public class OmniOpMode extends LinearOpMode {
 
 
             //OPEN INTAKE/CLAW
-            clawOpenClose.scaleRange(-1, .2);
+            clawOpenClose.scaleRange(0.0, 1.0);
 
             //Close
-            if (gamepad1.dpad_up) {
+            if (gamepad1.y) {
                 clawOpenClose.setPosition(-1);
                 telemetry.addData("Claw Servo Position","Open", clawOpenClose.getPosition());
             }
 
             //Open
-            else if (gamepad1.dpad_down) {
+            else if (gamepad1.a) {
                 clawOpenClose.setPosition(.2);
                 telemetry.addData("Claw Servo Position","Close", clawOpenClose.getPosition());
             }
@@ -196,23 +196,23 @@ public class OmniOpMode extends LinearOpMode {
             clawRotate.scaleRange(-1, 1);
 
             //Move left
-            if (gamepad1.dpad_left) {
+            if (gamepad1.dpad_right) {
                 clawRotate.setPosition(0);
                 telemetry.addData("Claw Rotate Servo Position","Left", clawRotate.getPosition());
             }
 
             //Move right
-            else if (gamepad1.dpad_right) {
-                clawRotate.setPosition(-1);
+            else if (gamepad1.dpad_left) {
+                clawRotate.setPosition(.4);
                 telemetry.addData("Claw Rotate Servo Position","Right", clawRotate.getPosition());
             }
-
-            //Move middle
+            /*
+             //Move middle
             else if (gamepad1.right_stick_button){
                 clawRotate.setPosition(.5);
                 telemetry.addData("Claw Rotate Servo Position","Middle", clawRotate.getPosition());
             }
-
+             */
             //Idle
             else {
                 telemetry.addData("Claw Rotate Servo Position","Idle", clawRotate.getPosition());
@@ -223,14 +223,14 @@ public class OmniOpMode extends LinearOpMode {
             wrist.scaleRange(-1, 1);
 
             //Move Wrist To Starting/Default Position
-            if (gamepad1.a)  {
-                wrist.setPosition(-.8);
+            if (gamepad1.dpad_down)  {
+                wrist.setPosition(-1);
                 telemetry.addData("Wrist Position","Starting/Default Position", wrist.getPosition());
             }
 
             //Move Wrist Out/Up Position
-            else if (gamepad1.y) {
-                wrist.setPosition(.8);
+            else if (gamepad1.dpad_up) {
+                wrist.setPosition(1);
                 telemetry.addData("Wrist Position","Outward/Up", wrist.getPosition());
             }
 
