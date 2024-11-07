@@ -27,7 +27,7 @@ claw horizontal rotation = "claw_rotate_h"
 wrist = "wrist"
  */
 
-@TeleOp(name="Omni OpMode 2 Players", group="Linear OpMode")
+@TeleOp(name="Omni OpMode 2 Player", group="Linear OpMode")
 //@Disabled
 public class OmniOpMode2P extends LinearOpMode {
     // Declare OpMode members for each of the 4 motors.
@@ -122,7 +122,7 @@ public class OmniOpMode2P extends LinearOpMode {
 
                 rightBackDrive.setPower(0);
                 rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                }
+            }
 
             // Send calculated power to wheels
             leftFrontDrive.setPower(leftFrontPower);
@@ -133,21 +133,24 @@ public class OmniOpMode2P extends LinearOpMode {
             //ROTATE ARM//
 
             //Right bumper rotates arm up
-            if (gamepad1.right_bumper && gamepad1.b) {
-                armMotorRotate.setPower(.7);
-                telemetry.addData("Arm Direction Rotation", "up");
+            if (gamepad2.right_bumper && gamepad2.b) {
+                armMotorRotate.setPower(1);
+                telemetry.addData("Arm Direction Rotation", "up 100%");
             }
 
-            else if (gamepad1.right_bumper) {
-                armMotorRotate.setPower(1);
-                telemetry.addData("Arm Direction Rotation", "up");
+            else if (gamepad2.right_bumper) {
+                armMotorRotate.setPower(.7);
+                telemetry.addData("Arm Direction Rotation", "up 70%");
             }
             //Hold Arm
-            else if (gamepad1.left_bumper) {
+            else if (gamepad2.left_bumper) {
                 telemetry.addData("Arm Direction Rotation", "hold");
                 armMotorRotate.setPower(.3);
             }
-
+            else if (gamepad2.x) {
+                telemetry.addData("Arm Direction Rotation", "down");
+                armMotorRotate.setPower(-.05);
+            }
             //Lower Arm
             else {
                 armMotorRotate.setPower(0);
@@ -159,8 +162,8 @@ public class OmniOpMode2P extends LinearOpMode {
             double armMotorExtend;
 
             //Right/left trigger used for extending/retracting
-            double extend = -gamepad1.right_trigger;
-            double shorten = gamepad1.left_trigger;
+            double extend = -gamepad2.right_trigger;
+            double shorten = gamepad2.left_trigger;
             armMotorExtend = Range.clip(extend + shorten, -1.0, 1.0);
 
             armExtend.setPower(armMotorExtend);
@@ -173,7 +176,6 @@ public class OmniOpMode2P extends LinearOpMode {
 
 
             //OPEN INTAKE/CLAW
-            clawOpenClose.scaleRange(0.0, 1.0);
 
             //Close
             if (gamepad2.y) {
@@ -193,7 +195,6 @@ public class OmniOpMode2P extends LinearOpMode {
             }
 
             //HORIZONTAL ROTATE INTAKE/CLAW
-            clawRotate.scaleRange(-1, 1);
 
             //Move left
             if (gamepad2.dpad_right) {
@@ -220,18 +221,17 @@ public class OmniOpMode2P extends LinearOpMode {
 
 
             //WRIST MOVEMENT
-            wrist.scaleRange(-1, 1);
 
             //Move Wrist To Starting/Default Position
-            if (gamepad2.dpad_down)  {
+            if (gamepad2.dpad_up)  {
                 wrist.setPosition(-1);
-                telemetry.addData("Wrist Position","Starting/Default Position", wrist.getPosition());
+                telemetry.addData("Wrist Position","Outward/Up", wrist.getPosition());
             }
 
             //Move Wrist Out/Up Position
-            else if (gamepad2.dpad_up) {
-                wrist.setPosition(1);
-                telemetry.addData("Wrist Position","Outward/Up", wrist.getPosition());
+            else if (gamepad2.dpad_down) {
+                wrist.setPosition(.4);
+                telemetry.addData("Wrist Position","Starting/Default Position", wrist.getPosition());
             }
 
             //Idle
