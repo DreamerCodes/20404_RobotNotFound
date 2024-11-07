@@ -27,9 +27,9 @@ claw horizontal rotation = "claw_rotate_h"
 wrist = "wrist"
  */
 
-@TeleOp(name="Omni OpMode", group="Linear OpMode")
+@TeleOp(name="Omni OpMode 2 Players", group="Linear OpMode")
 //@Disabled
-public class OmniOpMode extends LinearOpMode {
+public class OmniOpMode2P extends LinearOpMode {
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFrontDrive = null;
@@ -176,13 +176,13 @@ public class OmniOpMode extends LinearOpMode {
             clawOpenClose.scaleRange(0.0, 1.0);
 
             //Close
-            if (gamepad1.y) {
+            if (gamepad2.y) {
                 clawOpenClose.setPosition(-1);
                 telemetry.addData("Claw Servo Position","Open", clawOpenClose.getPosition());
             }
 
             //Open
-            else if (gamepad1.a) {
+            else if (gamepad2.a) {
                 clawOpenClose.setPosition(.2);
                 telemetry.addData("Claw Servo Position","Close", clawOpenClose.getPosition());
             }
@@ -196,13 +196,13 @@ public class OmniOpMode extends LinearOpMode {
             clawRotate.scaleRange(-1, 1);
 
             //Move left
-            if (gamepad1.dpad_right) {
+            if (gamepad2.dpad_right) {
                 clawRotate.setPosition(0);
                 telemetry.addData("Claw Rotate Servo Position","Left", clawRotate.getPosition());
             }
 
             //Move right
-            else if (gamepad1.dpad_left) {
+            else if (gamepad2.dpad_left) {
                 clawRotate.setPosition(.4);
                 telemetry.addData("Claw Rotate Servo Position","Right", clawRotate.getPosition());
             }
@@ -223,13 +223,13 @@ public class OmniOpMode extends LinearOpMode {
             wrist.scaleRange(-1, 1);
 
             //Move Wrist To Starting/Default Position
-            if (gamepad1.dpad_down)  {
+            if (gamepad2.dpad_down)  {
                 wrist.setPosition(-1);
                 telemetry.addData("Wrist Position","Starting/Default Position", wrist.getPosition());
             }
 
             //Move Wrist Out/Up Position
-            else if (gamepad1.dpad_up) {
+            else if (gamepad2.dpad_up) {
                 wrist.setPosition(1);
                 telemetry.addData("Wrist Position","Outward/Up", wrist.getPosition());
             }
