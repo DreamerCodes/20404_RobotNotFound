@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -27,9 +26,9 @@ claw horizontal rotation = "claw_rotate_h"
 wrist = "wrist"
  */
 
-@TeleOp(name="Omni OpMode", group="Linear OpMode")
+@TeleOp(name="Auto Omni OpMode", group="Autonomous OpMode")
 //@Disabled
-public class OmniOpMode extends LinearOpMode {
+public class AutoOmniOpMode extends LinearOpMode {
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFrontDrive = null;
@@ -149,7 +148,7 @@ public class OmniOpMode extends LinearOpMode {
             }
             else if (gamepad1.x) {
                 telemetry.addData("Arm Direction Rotation", "down");
-                armMotorRotate.setPower(-.05);
+                armMotorRotate.setPower(-.5);
             }
             //Lower Arm
             else {
